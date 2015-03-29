@@ -1,5 +1,7 @@
 # Quadtree
 
+[![Build Status](https://travis-ci.org/takagi/quadtree.svg?branch=master)](https://travis-ci.org/takagi/quadtree)
+
 Quadtree is quadtree data structure in Common Lisp.
 
 ## Usage
