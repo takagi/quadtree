@@ -1,0 +1,16 @@
+language: common-lisp
+
+env:
+  matrix:
+    - LISP=sbcl
+
+install:
+  # Install cl-travis
+  - curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | bash
+
+script:
+  - cl -l prove
+       -e '(or (loop for file in (uiop:directory-files (uiop:ensure-directory-pathname (uiop:getenv "TRAVIS_BUILD_DIR")))
+                     when (string= (namestring file) "quadtree-test.asd")
+                       do (prove:run file))
+               (uiop:quit -1))'
