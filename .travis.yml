@@ -17,7 +17,8 @@ script:
   - cl -l prove -l cl-coveralls
        -e '(or (coveralls:with-coveralls (:exclude "t")
                  (loop for file in (uiop:directory-files (uiop:ensure-directory-pathname (uiop:getenv "TRAVIS_BUILD_DIR")))
-                       when (string= (namestring file) "quadtree-test.asd")
+                       when (and (string= (pathname-type file) "asd")
+                                 (string= (pathname-name file) "quadtree-test"))
                          collect (pathname-name file) into test-files
                        finally
                          (return (not (some (function null) (mapcar (function prove:run) test-files))))))
