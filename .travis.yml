@@ -4,17 +4,21 @@ sudo: required
 
 env:
   matrix:
-    - LISP=sbcl
+    - LISP=sbcl COVERALLS=true
 
 install:
   # Install cl-travis
   - curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | bash
 
+before_script:
+  - git clone https://github.com/fukamachi/cl-coveralls ~/lisp/cl-coveralls
+
 script:
-  - cl -l prove
-       -e '(or (loop for file in (uiop:directory-files (uiop:ensure-directory-pathname (uiop:getenv "TRAVIS_BUILD_DIR")))
-                     when (string= (namestring file) "quadtree-test.asd")
-                       collect (pathname-name file) into test-files
-                     finally
-                       (return (not (some (function null) (mapcar (function prove:run) test-files)))))
+  - cl -l prove -l cl-coveralls
+       -e '(or (coveralls:with-coveralls (:exclude "t")
+                 (loop for file in (uiop:directory-files (uiop:ensure-directory-pathname (uiop:getenv "TRAVIS_BUILD_DIR")))
+                       when (string= (namestring file) "quadtree-test.asd")
+                         collect (pathname-name file) into test-files
+                       finally
+                         (return (not (some (function null) (mapcar (function prove:run) test-files))))))
                (uiop:quit -1))'
