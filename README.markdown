@@ -1,6 +1,7 @@
 # Quadtree
 
 [![Build Status](https://travis-ci.org/takagi/quadtree.svg?branch=master)](https://travis-ci.org/takagi/quadtree)
+[![Coverage Status](https://coveralls.io/repos/takagi/quadtree/badge.svg?branch=master)](https://coveralls.io/r/takagi/quadtree?branch=master)
 
 Quadtree is quadtree data structure in Common Lisp.
 
